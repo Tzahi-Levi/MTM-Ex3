@@ -1,12 +1,38 @@
 #ifndef MTMPARKINGLOT_UNIQUEARRAY_H
 #define MTMPARKINGLOT_UNIQUEARRAY_H
 
+
+template <class Element>
 template <class Element, class Compare = std::equal_to<Element>>
 class UniqueArray {
+    unsigned int size;
+    Element* data;
+    bool* dataInfo;
+    int nextIndex;
+    int currentNumberOfElements;
 public:
 
-    UniqueArray(unsigned int size);
-    UniqueArray(const UniqueArray& other);
+    UniqueArray(unsigned int size==1) : size(size), nextIndex(0), currentNumberOfElements(0) {
+                                        dataInfo(new bool[size]),
+                                        //TODO צריך להגדיר את הבנאי ככה שלא יסתמך על כך שיש בנאי ריק דיפולטיבי לאלמנט
+                                        data(new Element[size]);
+        for (int i=0; i<size ; i++){
+            dataInfo[i] = false;
+        }
+    }
+    UniqueArray(const UniqueArray& other) : size(other.size), nextIndex(other.nextIndex),
+                                            currentNumberOfElements(other.currentNumberOfElements),
+                                            dataInfo(new bool[other.size]),
+                                            //TODO צריך להגדיר את הבנאי ככה שלא יסתמך על כך שיש בנאי ריק דיפולטיבי לאלמנט
+                                            data(new Element[other.size]) {
+        for (int i=0; i<nextIndex; i++){
+            dataInfo[i] = other.dataInfo[i];
+            //TODO מניחים שיש פה אופרטור השמה לאלמנט האם זה בסדר?
+            data[i] = other.data[i];
+        }
+        for (int i=nextIndex; i<size; i++){
+            dataInfo[i] = false;
+    }
     ~UniqueArray();
     UniqueArray& operator=(const UniqueArray&) = delete;
     unsigned int insert(const Element& element);
