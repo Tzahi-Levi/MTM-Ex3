@@ -30,8 +30,9 @@ public:
             //TODO מניחים שיש פה אופרטור השמה לאלמנט האם זה בסדר?
             data[i] = other.data[i];
         }
-        for (int i=nextIndex; i<size; i++){
+        for (int i=nextIndex; i<size; i++) {
             dataInfo[i] = false;
+        }
     }
         ~UniqueArray(){
             delete [] dataInfo;
@@ -42,10 +43,10 @@ public:
         //TODO add Exception in case UniqueArray is full.
 
         for (unsigned int i=0; i<nextIndex; i++) {
-            if (data[i] == elemet /*TODO יש פה הנחה שיש אופרטור השוואה*/) {
+            if (dataInfo[i] and data[i] == elemet /*TODO יש פה הנחה שיש אופרטור השוואה*/) {
                 return i;
             }
-            if(dataInfo[i] == false){
+            if(!dataInfo[i]){
                 //TODO יש פה הנחה שיש אופרטור השמה
                 data[i] = element;
                 dataInfo[i] = true;
@@ -57,11 +58,34 @@ public:
         currentNumberOfElements++;
         return nextIndex++;
     }
-    bool getIndex(const Element& element, unsigned int& index) const;
-    const Element* operator[] (const Element& element) const;
-    bool remove(const Element& element);
-    unsigned int getCount() const;
-    unsigned int getSize() const;
+    bool getIndex(const Element& element, unsigned int& index) const{
+        for (unsigned int i=0; i<nextIndex ; i++) {
+            if (data[i] == element/*TODO יש פה הנחה שיש אופרטור השוואה*/) {
+                index = i;
+                return true;
+            }
+        }
+        return false;
+    }
+    const Element* operator[](const Element& element) const {
+        int tempIndex;
+        if(getIndex(element, tempIndex)){
+            return *data[tempIndex];
+        }
+        return  NULL;
+    }
+    bool remove(const Element& element){
+        for (int i = 0; i <nextIndex ; ++i) {
+            if(dataInfo[i] and data[i]==element) {
+                dataInfo[i] = false;
+                currentNumberOfElements--;
+                return true;
+            }
+        }
+        return false;
+    }
+    unsigned int count() const;
+    unsigned int size() const;
 
     class Filter {
     public:
