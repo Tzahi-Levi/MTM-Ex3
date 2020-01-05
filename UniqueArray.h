@@ -33,9 +33,30 @@ public:
         for (int i=nextIndex; i<size; i++){
             dataInfo[i] = false;
     }
-    ~UniqueArray();
+        ~UniqueArray(){
+            delete [] dataInfo;
+            delete[] data;
+        }
     UniqueArray& operator=(const UniqueArray&) = delete;
-    unsigned int insert(const Element& element);
+    unsigned int insert(const Element& element){
+        //TODO add Exception in case UniqueArray is full.
+
+        for (unsigned int i=0; i<nextIndex; i++) {
+            if (data[i] == elemet /*TODO יש פה הנחה שיש אופרטור השוואה*/) {
+                return i;
+            }
+            if(dataInfo[i] == false){
+                //TODO יש פה הנחה שיש אופרטור השמה
+                data[i] = element;
+                dataInfo[i] = true;
+                currentNumberOfElements++
+                return i;
+            }
+        }
+        dataInfo[nextIndex] = true;
+        currentNumberOfElements++;
+        return nextIndex++;
+    }
     bool getIndex(const Element& element, unsigned int& index) const;
     const Element* operator[] (const Element& element) const;
     bool remove(const Element& element);
