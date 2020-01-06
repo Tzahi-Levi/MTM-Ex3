@@ -12,10 +12,10 @@ class UniqueArray {
     int currentNumberOfElements;
 public:
 
-    UniqueArray(unsigned int size==1) : size(size), nextIndex(0), currentNumberOfElements(0) {
+    UniqueArray(unsigned int size==1) : size(size), nextIndex(0), currentNumberOfElements(0)
                                         dataInfo(new bool[size]),
                                         //TODO צריך להגדיר את הבנאי ככה שלא יסתמך על כך שיש בנאי ריק דיפולטיבי לאלמנט
-                                        data(new Element[size]);
+                                        data(new Element* [size]){
         for (int i=0; i<size ; i++){
             dataInfo[i] = false;
         }
@@ -37,7 +37,7 @@ public:
         ~UniqueArray(){
             delete [] dataInfo;
             delete[] data;
-        }
+
     UniqueArray& operator=(const UniqueArray&) = delete;
     unsigned int insert(const Element& element){
         //TODO add Exception in case UniqueArray is full.

@@ -33,9 +33,12 @@ class UniqueArray {
          //TODO add Exception in case UniqueArray is full.
 
         for (int i=0; i<nextIndex ; i++) {
-            if (data[i] == elemet or data[i] == 0) {
+            if (data[i] == elemet) {
                 currentNumberOfElements++;
                 return i;
+            }
+            if(data[i] == 0){
+
             }
         }
             currentNumberOfElements++;
